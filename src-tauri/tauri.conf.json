@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "img-sort",
+  "version": "0.1.0",
+  "identifier": "com.yldst.img-sort",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "img-sort",
+        "titleBarStyle": "Overlay",
+        "hiddenTitle": true,
+        "width": 800,
+        "height": 600,
+        "minWidth": 1000,
+        "minHeight": 600
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "resources": [
+      "../models/clip-vit-b32-onnx/onnx/*.onnx",
+      "../models/clip-vit-b32-onnx/tokenizer.json",
+      "../models/clip-vit-b32-onnx/tokenizer_config.json",
+      "../models/clip-vit-b32-onnx/vocab.json",
+      "../models/clip-vit-b32-onnx/merges.txt",
+      "../models/clip-vit-b32-onnx/special_tokens_map.json",
+      "../models/clip-vit-b32-onnx/config.json",
+      "../models/clip-vit-b32-onnx/preprocessor_config.json"
+    ],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}

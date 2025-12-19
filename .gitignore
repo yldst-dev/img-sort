@@ -1,0 +1,58 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+.vite
+.turbo
+coverage
+.nyc_output
+.eslintcache
+*.local
+*.tsbuildinfo
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+.AppleDouble
+.LSOverride
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Tauri / Rust
+src-tauri/target
+src-tauri/target/
+src-tauri/**/target/
+src-tauri/.cargo
+src-tauri/.cargo/
+
+# OS / temp
+Thumbs.db
+*.tmp
+*.temp
+
+# CLIP model repo artifacts (keep only the ONNX file we bundle)
+models/clip-vit-b32-onnx/.git
+models/clip-vit-b32-onnx/.git/
+models/clip-vit-b32-onnx/onnx/*.onnx
+!models/clip-vit-b32-onnx/onnx/model_q4f16.onnx
+
+# Local planning / prompt files
+front_workplan.md
+perfect frontent SKILL prompt.md
+workplan.md
+
+# Sample image
+mario-scheibl-QbnYcTqcyUA-unsplash.jpg

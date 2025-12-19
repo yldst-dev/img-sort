@@ -1,0 +1,12 @@
+pub mod classifier;
+pub mod clip;
+pub mod commands;
+pub mod config;
+pub mod db;
+pub mod decode;
+pub mod events;
+pub mod export;
+pub mod model;
+pub mod ollama;
+pub mod pipeline;
+pub mod scan;
