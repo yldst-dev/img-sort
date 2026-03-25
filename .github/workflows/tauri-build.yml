@@ -11,6 +11,7 @@ jobs:
   build:
     name: build (${{ matrix.name }})
     runs-on: ${{ matrix.os }}
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     strategy:
       fail-fast: false
       matrix:
@@ -29,26 +30,25 @@ jobs:
             args: ""
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
 
       - name: setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: lts/*
-          cache: npm
 
       - name: install Rust stable (default)
         if: matrix.os != 'macos-latest'
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@631a55b12751854ce901bb631d5902ceb48146f7
 
       - name: install Rust stable (mac targets)
         if: matrix.os == 'macos-latest'
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@631a55b12751854ce901bb631d5902ceb48146f7
         with:
           targets: aarch64-apple-darwin,x86_64-apple-darwin
 
       - name: Rust cache
-        uses: swatinem/rust-cache@v2
+        uses: swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32
         with:
           workspaces: ./src-tauri -> target
 
@@ -67,7 +67,7 @@ jobs:
         run: npm run tauri build -- ${{ matrix.args }}
 
       - name: upload bundles
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: img-sort-${{ matrix.name }}
           path: src-tauri/target/release/bundle/**
@@ -79,16 +79,16 @@ jobs:
     # This job is significantly slower than the hosted runners above.
     if: github.event_name == 'workflow_dispatch'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
 
       - name: Rust cache (host)
-        uses: swatinem/rust-cache@v2
+        uses: swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32
         with:
           workspaces: ./src-tauri -> target
           cache-on-failure: true
 
       - name: build in emulated arm64 runner
-        uses: pguyot/arm-runner-action@v2.6.5
+        uses: pguyot/arm-runner-action@e1773de1ed6eb61848f5693de824d836f0b0ea25
         with:
           base_image: https://dietpi.com/downloads/images/DietPi_RPi5-ARMv8-Bookworm.img.xz
           cpu: cortex-a72
@@ -117,7 +117,7 @@ jobs:
             npm run tauri build -- --verbose
 
       - name: upload bundles (linux-aarch64)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: img-sort-linux-aarch64
           path: src-tauri/target/release/bundle/**
